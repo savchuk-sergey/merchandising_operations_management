@@ -1,5 +1,6 @@
 const SET_PACKS = 'SET_PACKS'
 const SET_PACK = 'SET_PACK'
+const POST_PACK = 'POST_PACK'
 
 const initialState = {
   packs: [],
@@ -25,6 +26,11 @@ const packsReducer = (state = initialState, action) => {
         ...state,
         pack: action.payload.pack
       }
+    case POST_PACK:
+      return {
+        ...state,
+        pack: {...initialState.pack}
+      }
     default:
       return state
   }
@@ -40,6 +46,12 @@ export const setPack = (pack) => (
   {
     type: SET_PACK,
     payload: {pack}
+  }
+)
+
+export const postPack = () => (
+  {
+    type: POST_PACK
   }
 )
 

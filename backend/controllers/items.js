@@ -8,7 +8,8 @@ exports.getItems = async (req, res, next) => {
         const result = await _item.getItems();
         res.send(result);
     } catch (error) {
-        next(error)
+        res.status(500).send({message: error.message})
+        next(error);
     }
 };
 
@@ -17,7 +18,7 @@ exports.postItem = async (req, res, next) => {
     try {
         const _item = new Item({item, item_type, description, start_retail, uom});
         const result = await _item.createItem();
-        res.status(201).send({message:`Item: ${item} was integrated`});
+        res.status(201).send({message:`Item: ${item} has been integrated`});
     } catch (error) {
         res.status(500).send({message: error.message})
         next(error);

@@ -13,7 +13,7 @@ function PackWh({
 PackWh.prototype.createPackWh = async function () {
     try {
         const {rows} = await db.query(
-            `INSERT INTO main.item_store(
+            `INSERT INTO main.pack_wh(
                   pack,
                   wh)
             VALUES ($1, $2)`,

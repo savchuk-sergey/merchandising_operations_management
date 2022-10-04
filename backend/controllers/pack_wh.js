@@ -12,8 +12,9 @@ exports.postPackWh = async (req, res, next) => {
             wh
         });
         const result = await _packWh.createPackWh();
-        res.send(_packWh);
+        res.status(201).send({message:`Pack Wh link: ${pack}/${wh} has been integrated`});
     } catch (error) {
+        res.status(500).send({message: error.message})
         next(error);
     }
 };
@@ -31,33 +32,9 @@ exports.getPackWh = async (req, res, next) => {
             qty
         });
         const result = await _packWh.getPackWh();
-        res.send(result);
+        res.status(201).send({message:`Pack Wh link: ${pack}/${wh} has been integrated`});
     } catch (error) {
         res.status(500).send({message: error.message})
         next(error);
     }
 };
-
-// exports.postItemStore = async (req, res, next) => {
-//     const {item, store, retail_price} = req.body;
-//     try {
-//         const _itemStore = new ItemStore({item, store, retail_price});
-//         const result = await _itemStore.createItemStore();
-//         res.status(201).send({message:`Item Store Link: ${item}/${store} was integrated`});
-//     } catch (error) {
-//         res.status(500).send({message: error.message})
-//         next(error);
-//     }
-// };
-//
-// exports.getItemStores = async (req, res, next) => {
-//     const {item, store, retail_price} = req.body;
-//     try {
-//         const _item_stores = new ItemStore({item, store, retail_price});
-//         const result = await _item_stores.getItemStores();
-//         res.send(result);
-//     } catch (error) {
-//         res.status(500).send({message: error.message})
-//         next(error);
-//     }
-// };

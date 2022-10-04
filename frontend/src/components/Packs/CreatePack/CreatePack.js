@@ -3,9 +3,9 @@ import Button from "react-materialize/lib/Button";
 import UploadCSV from "../../utils/UploadCSV";
 import postData from "../../../logic/utils/postData";
 import {useDispatch, useSelector} from "react-redux";
-import {setPack} from "../../../redux/reducers/PacksReducer";
+import {postPack, setPack} from "../../../redux/reducers/PacksReducer";
 
-const CreatePack = (props) => {
+const CreatePack = () => {
   const dispatch = useDispatch()
   const pack = useSelector(state => state.packs.pack)
 
@@ -14,8 +14,10 @@ const CreatePack = (props) => {
     postData('http://localhost:3000/post_pack', pack)
       .then(r => {
         M.toast({html: r.message})
-        dispatch()
-      })
+        dispatch(postPack())
+      }).catch(e => {
+      console.log(e)
+    })
   }
 
   const changeHandler = (e) => {

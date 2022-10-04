@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 
 import '../assets/css/App.css'
 import Signin from "./Signin/Signin";
@@ -19,6 +19,10 @@ import Packs from "./Packs/Packs";
 import CreatePack from "./Packs/CreatePack/CreatePack";
 import Whs from "./Whs/Whs";
 import PackWhLinks from "./Packs/PackWhList/PackWhLinks";
+import CreatePackWhLink from "./Packs/CreatePackWhLink/CreatePackWhLink";
+import CreateWh from "./Whs/CreateWh/CreateWh";
+import Suppliers from "./Suppliers/Suppliers";
+import CreateSupplier from "./Suppliers/CreateSupplier/CreateSupplier";
 
 function App() {
   const currentUser = useSelector(state => state.user.jwt)
@@ -76,6 +80,14 @@ function App() {
                  element={<Whs/>}/>
           <Route path='/PackWhLinks'
                    element={<PackWhLinks/>}/>
+          <Route path='/CreatePackWhLink'
+                 element={<CreatePackWhLink/>}/>
+          <Route path='/CreateWh'
+                 element={<CreateWh/>}/>
+          <Route path='/Suppliers'
+                 element={<Suppliers/>}/>
+          <Route path='/SuppliersCreate'
+                 element={<CreateSupplier/>}/>
         </Routes>
       </div>
     )

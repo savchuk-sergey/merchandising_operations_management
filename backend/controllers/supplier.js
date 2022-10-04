@@ -13,9 +13,10 @@ exports.postSupplier = async (req, res, next) => {
             phone_number
         })
         const result = await _supplier.createSupplier()
-        res.send(_supplier)
+        res.status(201).send({message:`Supplier: ${name} has been integrated`});
     } catch (error) {
-        next(error)
+        res.status(500).send({message: error.message})
+        next(error);
     }
 }
 
@@ -34,6 +35,7 @@ exports.getSuppliers = async (req, res, next) => {
         const result = await _supplier.getSupplier()
         res.send(result)
     } catch (error) {
-        next(error)
+        res.status(500).send({message: error.message})
+        next(error);
     }
 }

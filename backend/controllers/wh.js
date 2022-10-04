@@ -13,9 +13,10 @@ exports.postWh = async (req, res, next) => {
             wh_address
         })
         const result = await _wh.createWh()
-        res.send(_wh)
+        res.status(201).send({message:`Wh: ${wh_name} has been integrated`});
     } catch (error) {
-        next(error)
+        res.status(500).send({message: error.message})
+        next(error);
     }
 }
 
@@ -34,6 +35,7 @@ exports.getWh = async (req, res, next) => {
         const result = await _wh.getWh()
         res.send(result)
     } catch (error) {
-        next(error)
+        res.status(500).send({message: error.message})
+        next(error);
     }
 }

@@ -5,7 +5,7 @@ import postData from "../../../logic/utils/postData";
 import {useDispatch, useSelector} from "react-redux";
 import {postItem, setItem} from "../../../redux/reducers/itemsReducer";
 
-const CreateItem = (props) => {
+const CreateItem = () => {
   const dispatch = useDispatch()
   const item = useSelector(state => state.items.item)
 
@@ -15,7 +15,9 @@ const CreateItem = (props) => {
       .then(r => {
         M.toast({html: r.message})
         dispatch(postItem())
-      })
+      }).catch(e => {
+      M.toast({html: e.message})
+    })
   }
 
   const changeHandler = (e) => {

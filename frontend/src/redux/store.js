@@ -10,6 +10,7 @@ import packsReducer from "./reducers/PacksReducer";
 import whsReducer from "./reducers/whsReducer";
 import packWhsReducer from "./reducers/PackWhsReducer";
 import priceChangeReducer from "./reducers/PriceChangeReducer";
+import suppliersReducer from "./reducers/suppliersReducer";
 
 let reducers = combineReducers({
   items: itemsReducer,
@@ -21,6 +22,7 @@ let reducers = combineReducers({
   whs: whsReducer,
   packWhs: packWhsReducer,
   priceChange: priceChangeReducer,
+  suppliers: suppliersReducer,
 })
 
 let store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)))

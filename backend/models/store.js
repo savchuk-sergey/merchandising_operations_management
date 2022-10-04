@@ -6,7 +6,6 @@ function Store({
                    store_name,
                    store_manager,
                    open_date,
-                   close_date,
                    phone_number,
                    store_type,
                    default_wh
@@ -18,12 +17,14 @@ function Store({
         this.phone_number = phone_number
         this.store_type = store_type
         this.default_wh = default_wh
-        close_date = undefined
+        //close_date = undefined
 }
 
 // add a createStore method to the prototype
 Store.prototype.createStore = async function() {
     try {
+        console.log(new Date(this.open_date))
+        console.log(this.open_date)
         const { rows } = await db.query(
             `INSERT INTO main.store(store,
                    store_name,
@@ -35,7 +36,7 @@ Store.prototype.createStore = async function() {
             VALUES ($1, $2, $3, $4, $5, $6, $7)`,
             [this.store, this.store_name, this.store_manager, new Date(this.open_date), this.phone_number, this.store_type, this.default_wh]
         );
-        console.log(new Date(this.open_date))
+
         return rows
     } catch (error) {
         throw error

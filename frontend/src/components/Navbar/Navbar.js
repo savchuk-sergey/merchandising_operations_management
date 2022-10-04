@@ -5,7 +5,7 @@ import {SideNav, Collapsible, CollapsibleItem} from 'react-materialize'
 import {signOut} from "../../logic/auth.logic";
 import {setUser} from "../../redux/reducers/userReducer";
 
-const Navbar = (props) => {
+const Navbar = () => {
   let currentUser = useSelector(state => state.user.jwt)
   const dispatch = useDispatch()
 
@@ -90,6 +90,9 @@ const Navbar = (props) => {
                 <li>
                   <NavLink to='/PackWhLinks'>Pack Warehouse Links</NavLink>
                 </li>
+                <li>
+                  <NavLink to='/CreatePackWhLink'>Create Pack Wh Link</NavLink>
+                </li>
               </ul>
             </CollapsibleItem>
 
@@ -118,7 +121,7 @@ const Navbar = (props) => {
                   <NavLink to='/Warehouses'>List Warehouses</NavLink>
                 </li>
                 <li>
-                  <NavLink to='/WarehousesCreate'>Create Warehouses</NavLink>
+                  <NavLink to='/CreateWh'>Create Warehouses</NavLink>
                 </li>
               </ul>
             </CollapsibleItem>

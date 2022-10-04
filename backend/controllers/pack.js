@@ -22,8 +22,9 @@ exports.postPacks = async (req, res, next) => {
             cost
         });
         const result = await _pack.createPack();
-        res.send(_pack);
+        res.status(201).send({message:`Pack: ${pack} has been integrated`});
     } catch (error) {
+        res.status(500).send({message: error.message})
         next(error);
     }
 };
