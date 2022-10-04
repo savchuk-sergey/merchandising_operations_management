@@ -1,0 +1,32 @@
+{
+  "name": "moms",
+  "version": "0.0.1",
+  "description": "Diploma project",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "-"
+  },
+  "author": "Sergey Savchuk",
+  "license": "ISC",
+  "scripts": {
+    "start": "nodemon app.js",
+    "dev": "concurrently \"nodemon app.js\" \"cd ./../frontend && npm start\""
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "pg": "^8.7.3",
+    "pg-promise": "^10.11.1",
+    "requirejs": "^2.3.6",
+    "sequelize": "^6.20.1"
+  },
+  "devDependencies": {
+    "concurrently": "^7.0.0",
+    "nodemon": "^2.0.15"
+  }
+}
