@@ -30,7 +30,7 @@ ShipmentDetail.prototype.createShipmentDetail = async function () {
 ShipmentDetail.prototype.getShipmentDetail = async function () {
     try {
         const {rows} = await db.query(
-            `SELECT * FROM main.order_details`
+            `SELECT * FROM main.shipment_details`
         );
         return rows
     } catch (error) {

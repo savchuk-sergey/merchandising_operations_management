@@ -21,21 +21,21 @@ Order.prototype.createOrder = async function () {
             `CALL main.create_order($1, $2, $3, $4, $5)`,
             [this.supplier_id, this.wh_id, new Date(this.order_date), ['1', '1', '1'], [1, 2, 3]]
         );
-        return this.order_id
+        return rows
     } catch (error) {
         throw error
     }
 };
-//
-// Order.prototype.getOrder = async function () {
-//     try {
-//         const {rows} = await db.query(
-//             `select last_value from main.order_id_seq`
-//         );
-//         return rows
-//     } catch (error) {
-//         throw error
-//     }
-// };
+
+Order.prototype.getOrder = async function () {
+    try {
+        const {rows} = await db.query(
+            `select * from main.order`
+        );
+        return rows
+    } catch (error) {
+        throw error
+    }
+};
 
 module.exports = Order

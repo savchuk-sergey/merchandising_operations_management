@@ -4,7 +4,7 @@ import {CSVLink} from "react-csv";
 import getPackWhLinks from "../../../logic/getPackWhLinks.logic";
 import {setPackWhs} from "../../../redux/reducers/PackWhsReducer";
 
-const PackWhLinks = (props) => {
+const PackWhLinks = () => {
   const dispatch = useDispatch()
   const packWhs = useSelector(state => state.packWhs.packWhs)
 
@@ -12,8 +12,6 @@ const PackWhLinks = (props) => {
     getPackWhLinks().then(
       r => {
         dispatch(setPackWhs(r))
-        console.log(packWhs)
-        console.log(r)
       }
     )
   }, []);

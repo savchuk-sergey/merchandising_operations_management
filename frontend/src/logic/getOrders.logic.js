@@ -1,7 +1,7 @@
 import getData from "./utils/getData";
 
-const getPackWhLinks = () => {
-  return getData('http://localhost:3000/get_pack_whs')
+const getOrders = () => {
+  return getData('http://localhost:3000/get_orders')
     .then(r => {
       return r
     })
@@ -11,4 +11,4 @@ const getPackWhLinks = () => {
 
 }
 
-export default getPackWhLinks
+export default getOrders

@@ -1,5 +1,4 @@
 const db = require('../db')
-const os = require('os')
 
 function OrderDetail({
                          order_id,
@@ -39,24 +38,5 @@ OrderDetail.prototype.getOrderDetails = async function () {
         throw error
     }
 };
-
-// function populateOrderDetails(pack_qty) {
-//     pack_qty.map(pq => {
-//         try {
-//             console.log(pq.pack, pq.qty)
-//             // const {rows} = db.query(
-//             //     `INSERT INTO main.order_details(order_id
-//             //     pack
-//             //     qty
-//             // )
-//             // VALUES ($1, $2, $3)`,
-//             //     [order_id, pq.pack, pq.qty]
-//             // );
-//             // return rows
-//         } catch (error) {
-//             throw error
-//         }
-//     })
-// }
 
 module.exports = OrderDetail

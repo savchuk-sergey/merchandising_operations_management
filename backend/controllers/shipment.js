@@ -16,6 +16,7 @@ exports.postShipment = async (req, res, next) => {
         const result = await _shipment.createShipment();
         res.send(result);
     } catch (error) {
+        res.status(500).send({message: error.message})
         next(error);
     }
 };
@@ -36,6 +37,7 @@ exports.getShipments = async (req, res, next) => {
         const result = await _shipment.getShipment();
         res.send(result);
     } catch (error) {
-        next(error)
+        res.status(500).send({message: error.message})
+        next(error);
     }
 };

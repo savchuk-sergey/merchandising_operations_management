@@ -3,5 +3,5 @@ const router = express.Router();
 
 const shipmentController = require('../controllers/shipment');
 router.post('/post_shipment', shipmentController.postShipment);
-router.get('/get_shipment', shipmentController.getShipments);
+router.get('/get_shipments', shipmentController.getShipments);
 module.exports = router;

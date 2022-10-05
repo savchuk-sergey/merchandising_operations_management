@@ -17,6 +17,7 @@ exports.postOrderDetails = async (req, res, next) => {
         console.log(result)
         res.send(result);
     } catch (error) {
+        res.status(500).send({message: error.message})
         next(error);
     }
 };
@@ -36,6 +37,7 @@ exports.getOrderDetails = async (req, res, next) => {
         const result = await _order.getOrderDetails();
         res.send(result);
     } catch (error) {
-        next(error)
+        res.status(500).send({message: error.message})
+        next(error);
     }
 };

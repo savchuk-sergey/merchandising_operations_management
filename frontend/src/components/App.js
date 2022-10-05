@@ -23,6 +23,10 @@ import CreatePackWhLink from "./Packs/CreatePackWhLink/CreatePackWhLink";
 import CreateWh from "./Whs/CreateWh/CreateWh";
 import Suppliers from "./Suppliers/Suppliers";
 import CreateSupplier from "./Suppliers/CreateSupplier/CreateSupplier";
+import Orders from "./Orders/Orders";
+import OrderDetails from "./Orders/OrderDetails/OrderDetails";
+import Shipments from "./Shipments/Shipment";
+import ShipmentDetails from "./Shipments/ShipmentDetails/ShipmentDetails";
 
 function App() {
   const currentUser = useSelector(state => state.user.jwt)
@@ -88,6 +92,22 @@ function App() {
                  element={<Suppliers/>}/>
           <Route path='/SuppliersCreate'
                  element={<CreateSupplier/>}/>
+          <Route path='/Orders'
+                 element={<Orders/>}/>
+          {/*<Route path='/OrdersCreate'*/}
+          {/*       element={<CreateOrder/>}/>*/}
+          <Route path='/OrdersDetails'
+                 element={<OrderDetails/>}/>
+          {/*<Route path='/OrdersDetailsCreate'*/}
+          {/*       element={<CreateOrderDetails/>}/>*/}
+          <Route path='/Shipments'
+                 element={<Shipments/>}/>
+          {/*<Route path='/ShipmentsCreate'*/}
+          {/*       element={<CreateShipment/>}/>*/}
+          <Route path='/ShipmentDetails'
+                 element={<ShipmentDetails/>}/>
+          {/*<Route path='/ShipmentDetailsCreate'*/}
+          {/*       element={<CreateShipmentDetails/>}/>*/}
         </Routes>
       </div>
     )

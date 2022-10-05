@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import getItems from "../../logic/getItems.logic";
 import {useDispatch, useSelector} from "react-redux";
 import {setItems} from "../../redux/reducers/itemsReducer";
 import formatDateTime from "../utils/formatDateTime";
 import {CSVLink} from "react-csv";
 
-const Items = (props) => {
+const Items = () => {
   const dispatch = useDispatch()
   const items = useSelector(state => state.items.items)
 

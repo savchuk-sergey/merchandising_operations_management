@@ -18,6 +18,7 @@ exports.postOrder = async (req, res, next) => {
         res.status(201).send({message:`Order was integrated`});
         res.send(result);
     } catch (error) {
+        res.status(500).send({message: error.message})
         next(error);
     }
 };
@@ -45,6 +46,7 @@ exports.getOrders = async (req, res, next) => {
         const result = await _order.getOrder();
         res.send(result);
     } catch (error) {
-        next(error)
+        res.status(500).send({message: error.message})
+        next(error);
     }
 };
