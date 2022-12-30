@@ -10,8 +10,8 @@ const initialState = {
     pack_qty: '',
     item_id: '',
     description: '',
-    cost: ''
-  }
+    cost: '',
+  },
 }
 
 const packsReducer = (state = initialState, action) => {
@@ -19,40 +19,34 @@ const packsReducer = (state = initialState, action) => {
     case SET_PACKS:
       return {
         ...state,
-        packs: action.payload.packs
+        packs: action.payload.packs,
       }
     case SET_PACK:
       return {
         ...state,
-        pack: action.payload.pack
+        pack: action.payload.pack,
       }
     case POST_PACK:
       return {
         ...state,
-        pack: {...initialState.pack}
+        pack: { ...initialState.pack },
       }
     default:
       return state
   }
 }
 
-export const setPacks = (packs) => (
-  {
-    type: SET_PACKS,
-    payload: {packs}
-  }
-)
-export const setPack = (pack) => (
-  {
-    type: SET_PACK,
-    payload: {pack}
-  }
-)
+export const setPacks = (packs) => ({
+  type: SET_PACKS,
+  payload: { packs },
+})
+export const setPack = (pack) => ({
+  type: SET_PACK,
+  payload: { pack },
+})
 
-export const postPack = () => (
-  {
-    type: POST_PACK
-  }
-)
+export const postPack = () => ({
+  type: POST_PACK,
+})
 
-export default packsReducer;
+export default packsReducer

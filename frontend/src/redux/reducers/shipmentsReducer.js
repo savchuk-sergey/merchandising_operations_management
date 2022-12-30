@@ -7,10 +7,9 @@ const initialState = {
   shipment: {
     from: '',
     to: '',
-    in_date: '',
-    status: '',
-    out_date: ''
-  }
+    pack: '',
+    qty: '',
+  },
 }
 
 const shipmentsReducer = (state = initialState, action) => {
@@ -18,41 +17,35 @@ const shipmentsReducer = (state = initialState, action) => {
     case SET_SHIPMENTS:
       return {
         ...state,
-        shipments: action.payload.shipments
+        shipments: action.payload.shipments,
       }
     case SET_SHIPMENT:
       return {
         ...state,
-        shipment: action.payload.shipment
+        shipment: action.payload.shipment,
       }
     case POST_SHIPMENT:
       return {
         ...state,
-        shipment: {...initialState.shipment}
+        shipment: { ...initialState.shipment },
       }
     default:
       return state
   }
 }
 
-export const setShipments = (shipments) => (
-  {
-    type: SET_SHIPMENTS,
-    payload: {shipments}
-  }
-)
+export const setShipments = (shipments) => ({
+  type: SET_SHIPMENTS,
+  payload: { shipments },
+})
 
-export const setShipment = (shipment) => (
-  {
-    type: SET_SHIPMENT,
-    payload: {shipment}
-  }
-)
+export const setShipment = (shipment) => ({
+  type: SET_SHIPMENT,
+  payload: { shipment },
+})
 
-export const postShipment = () => (
-  {
-    type: POST_SHIPMENT
-  }
-)
+export const postShipment = () => ({
+  type: POST_SHIPMENT,
+})
 
-export default shipmentsReducer;
+export default shipmentsReducer

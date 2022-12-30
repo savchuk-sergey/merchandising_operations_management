@@ -1,7 +1,7 @@
 const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const {spawn} = require('child_process')
+const { spawn } = require('child_process')
 
 // Any directories you will be adding code/files into, need to be added to this array so webpack will pick them up
 const defaultInclude = path.resolve(__dirname, 'src')
@@ -11,31 +11,44 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: [{loader: 'style-loader'}, {loader: 'css-loader'}, {loader: 'postcss-loader'}],
-        include: defaultInclude
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
+          { loader: 'postcss-loader' },
+        ],
+        include: defaultInclude,
       },
       {
         test: /\.jsx?$/,
-        use: [{loader: 'babel-loader'}],
-        include: defaultInclude
+        use: [{ loader: 'babel-loader' }],
+        include: defaultInclude,
       },
       {
         test: /\.(jpe?g|png|gif)$/,
-        use: [{loader: 'file-loader?name=img/[name]__[hash:base64:5].[ext]'}],
-        include: defaultInclude
+        use: [
+          {
+            loader:
+              'file-loader?name=img/[name]__[hash:base64:5].[ext]',
+          },
+        ],
+        include: defaultInclude,
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
-        use: [{loader: 'file-loader?name=font/[name]__[hash:base64:5].[ext]'}],
-        include: defaultInclude
-      }
-    ]
+        use: [
+          {
+            loader:
+              'file-loader?name=font/[name]__[hash:base64:5].[ext]',
+          },
+        ],
+        include: defaultInclude,
+      },
+    ],
   },
   target: 'electron-renderer',
   plugins: [
-    new HtmlWebpackPlugin(
-      {
-        templateContent: `
+    new HtmlWebpackPlugin({
+      templateContent: `
           <html>
             <head>
                 <title>Merchandising operations management</title>
@@ -47,12 +60,11 @@ module.exports = {
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
             </body>
           </html>
-        `
-      }
-    ),
+        `,
+    }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
-    })
+      'process.env.NODE_ENV': JSON.stringify('development'),
+    }),
   ],
   devtool: 'cheap-source-map',
   devServer: {
@@ -60,7 +72,7 @@ module.exports = {
     stats: {
       colors: true,
       chunks: false,
-      children: false
+      children: false,
     },
     historyApiFallback: true,
     // historyApiFallback: {
@@ -72,13 +84,15 @@ module.exports = {
     //   ],
     // },
     before() {
-      spawn(
-        'electron',
-        ['.'],
-        {shell: true, env: process.env, stdio: 'inherit'}
-      )
-        .on('close', code => process.exit(0))
-        .on('error', spawnError => console.error(spawnError))
-    }
-  }
+      spawn('electron', ['.'], {
+        shell: true,
+        env: process.env,
+        stdio: 'inherit',
+      })
+        .on('close', (code) => process.exit(0))
+        .on('error', (spawnError) =>
+          console.error(spawnError)
+        )
+    },
+  },
 }

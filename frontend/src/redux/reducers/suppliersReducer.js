@@ -7,8 +7,8 @@ const initialState = {
   supplier: {
     name: '',
     address: '',
-    phone_number: ''
-  }
+    phone_number: '',
+  },
 }
 
 const suppliersReducer = (state = initialState, action) => {
@@ -16,43 +16,37 @@ const suppliersReducer = (state = initialState, action) => {
     case SET_SUPPLIERS:
       return {
         ...state,
-        suppliers: action.payload.suppliers
+        suppliers: action.payload.suppliers,
       }
     case SET_SUPPLIER:
       return {
         ...state,
-        supplier: action.payload.supplier
+        supplier: action.payload.supplier,
       }
     case POST_SUPPLIER:
       return {
         ...state,
         supplier: {
-          ...initialState.supplier
-        }
+          ...initialState.supplier,
+        },
       }
     default:
       return state
   }
 }
 
-export const setSuppliers = (suppliers) => (
-  {
-    type: SET_SUPPLIERS,
-    payload: {suppliers}
-  }
-)
+export const setSuppliers = (suppliers) => ({
+  type: SET_SUPPLIERS,
+  payload: { suppliers },
+})
 
-export const setSupplier = (supplier) => (
-  {
-    type: SET_SUPPLIER,
-    payload: {supplier}
-  }
-)
+export const setSupplier = (supplier) => ({
+  type: SET_SUPPLIER,
+  payload: { supplier },
+})
 
-export const postSupplier = () => (
-  {
-    type: POST_SUPPLIER
-  }
-)
+export const postSupplier = () => ({
+  type: POST_SUPPLIER,
+})
 
-export default suppliersReducer;
+export default suppliersReducer

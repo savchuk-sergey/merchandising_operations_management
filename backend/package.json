@@ -1,8 +1,8 @@
 {
-  "name": "moms",
-  "version": "0.0.1",
-  "description": "Diploma project",
-  "main": "app.js",
+  "name": "my-webpack-project",
+  "version": "1.0.0",
+  "description": "My webpack project",
+  "main": "src/app.js",
   "repository": {
     "type": "git",
     "url": "-"
@@ -10,10 +10,16 @@
   "author": "Sergey Savchuk",
   "license": "ISC",
   "scripts": {
-    "start": "nodemon app.js",
-    "dev": "concurrently \"nodemon app.js\" \"cd ./../frontend && npm start\""
+    "start": "nodemon src/app.js",
+    "dev": "concurrently \"nodemon app.js\" \"cd ./../frontend && npm start\"",
+    "build": "webpack --mode=production --node-env=production",
+    "build:dev": "webpack --mode=development",
+    "build:prod": "webpack --mode=production --node-env=production",
+    "watch": "webpack --watch",
+    "serve": "webpack serve"
   },
   "dependencies": {
+    "@prisma/client": "^4.8.0",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.2",
     "cors": "^2.8.5",
@@ -26,7 +32,16 @@
     "sequelize": "^6.20.1"
   },
   "devDependencies": {
+    "@webpack-cli/generators": "^3.0.1",
+    "awesome-typescript-loader": "^5.2.1",
     "concurrently": "^7.0.0",
-    "nodemon": "^2.0.15"
+    "js-to-ts-converter": "^0.18.2",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.7.1",
+    "prisma": "^4.8.0",
+    "source-map-loader": "^4.0.1",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "workbox-webpack-plugin": "^6.5.4"
   }
 }

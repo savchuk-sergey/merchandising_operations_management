@@ -3,14 +3,14 @@
 // Import parts of electron to use
 const os = require('os')
 
-const {app, BrowserWindow} = require('electron')
+const { app, BrowserWindow } = require('electron')
 let path = require('path')
 const url = require('url')
 
 // this should be placed at top of main.js to handle setup events quickly
 if (handleSquirrelEvent(app)) {
   // squirrel event handled and app will exit in 1000ms, so don't do anything else
-  return;
+  return
 }
 
 // const reactDevToolsPath = path.join(
@@ -38,7 +38,10 @@ let dev = false
 //   dev = true
 // }
 
-if (process.env.NODE_ENV !== undefined && process.env.NODE_ENV === 'development') {
+if (
+  process.env.NODE_ENV !== undefined &&
+  process.env.NODE_ENV === 'development'
+) {
   dev = true
 }
 
@@ -46,7 +49,10 @@ if (process.env.NODE_ENV !== undefined && process.env.NODE_ENV === 'development'
 // info: https://github.com/electron/electron/issues/9691
 if (process.platform === 'win32') {
   app.commandLine.appendSwitch('high-dpi-support', 'true')
-  app.commandLine.appendSwitch('force-device-scale-factor', '1')
+  app.commandLine.appendSwitch(
+    'force-device-scale-factor',
+    '1'
+  )
 }
 
 function createWindow() {
@@ -62,8 +68,8 @@ function createWindow() {
       // defaultFontSize: 24,
       // defaultMonospaceFontSize: 20,
       nodeIntegration: true,
-      contextIsolation: false
-    }
+      contextIsolation: false,
+    },
   })
 
   // and load the index.html of the app.
@@ -74,13 +80,13 @@ function createWindow() {
       protocol: 'http:',
       host: 'localhost:8080',
       pathname: 'index.html',
-      slashes: true
+      slashes: true,
     })
   } else {
     indexPath = url.format({
       protocol: 'file:',
       pathname: path.join(__dirname, 'dist', 'index.html'),
-      slashes: true
+      slashes: true,
     })
   }
 
@@ -92,15 +98,23 @@ function createWindow() {
 
     // Open the DevTools automatically if developing
     if (dev) {
-      const {default: installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS} = require('electron-devtools-installer')
+      const {
+        default: installExtension,
+        REACT_DEVELOPER_TOOLS,
+        REDUX_DEVTOOLS,
+      } = require('electron-devtools-installer')
 
       installExtension(REACT_DEVELOPER_TOOLS)
-        .then(a => console.log(a + ' was added'))
-        .catch(err => console.log('Error loading React DevTools: ', err))
+        .then((a) => console.log(a + ' was added'))
+        .catch((err) =>
+          console.log('Error loading React DevTools: ', err)
+        )
 
       installExtension(REDUX_DEVTOOLS)
-        .then(a => console.log(a + ' was added'))
-        .catch(err => console.log('Error loading Redux DevTools: ', err))
+        .then((a) => console.log(a + ' was added'))
+        .catch((err) =>
+          console.log('Error loading Redux DevTools: ', err)
+        )
 
       mainWindow.webContents.openDevTools()
     }
@@ -137,38 +151,38 @@ app.on('activate', () => {
   }
 })
 
-
 function handleSquirrelEvent(application) {
   if (process.argv.length === 1) {
-    return false;
+    return false
   }
 
-  const ChildProcess = require('child_process');
-  const path = require('path');
+  const ChildProcess = require('child_process')
+  const path = require('path')
 
-  const appFolder = path.resolve(process.execPath, '..');
-  const rootAtomFolder = path.resolve(appFolder, '..');
-  const updateDotExe = path.resolve(path.join(rootAtomFolder, 'Update.exe'));
-  const exeName = path.basename(process.execPath);
+  const appFolder = path.resolve(process.execPath, '..')
+  const rootAtomFolder = path.resolve(appFolder, '..')
+  const updateDotExe = path.resolve(
+    path.join(rootAtomFolder, 'Update.exe')
+  )
+  const exeName = path.basename(process.execPath)
 
   const spawn = function (command, args) {
-    let spawnedProcess, error;
+    let spawnedProcess, error
 
     try {
       spawnedProcess = ChildProcess.spawn(command, args, {
-        detached: true
-      });
-    } catch (error) {
-    }
+        detached: true,
+      })
+    } catch (error) {}
 
-    return spawnedProcess;
-  };
+    return spawnedProcess
+  }
 
   const spawnUpdate = function (args) {
-    return spawn(updateDotExe, args);
-  };
+    return spawn(updateDotExe, args)
+  }
 
-  const squirrelEvent = process.argv[1];
+  const squirrelEvent = process.argv[1]
   switch (squirrelEvent) {
     case '--squirrel-install':
     case '--squirrel-updated':
@@ -178,27 +192,27 @@ function handleSquirrelEvent(application) {
       //   explorer context menus
 
       // Install desktop and start menu shortcuts
-      spawnUpdate(['--createShortcut', exeName]);
+      spawnUpdate(['--createShortcut', exeName])
 
-      setTimeout(application.quit, 1000);
-      return true;
+      setTimeout(application.quit, 1000)
+      return true
 
     case '--squirrel-uninstall':
       // Undo anything you did in the --squirrel-install and
       // --squirrel-updated handlers
 
       // Remove desktop and start menu shortcuts
-      spawnUpdate(['--removeShortcut', exeName]);
+      spawnUpdate(['--removeShortcut', exeName])
 
-      setTimeout(application.quit, 1000);
-      return true;
+      setTimeout(application.quit, 1000)
+      return true
 
     case '--squirrel-obsolete':
       // This is called on the outgoing version of your app before
       // we update to the new version - it's the opposite of
       // --squirrel-updated
 
-      application.quit();
-      return true;
+      application.quit()
+      return true
   }
-};
+}

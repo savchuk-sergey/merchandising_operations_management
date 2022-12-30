@@ -9,8 +9,13 @@ const initialState = {
     item_type: '',
     description: '',
     start_retail: '',
-    uom: ''
-  }
+    uom: '',
+    created_at: '',
+    created_by: '',
+    updated_at: '',
+    updated_by: '',
+    selling_currency: '',
+  },
 }
 
 const itemsReducer = (state = initialState, action) => {
@@ -18,43 +23,37 @@ const itemsReducer = (state = initialState, action) => {
     case SET_ITEMS:
       return {
         ...state,
-        items: action.payload.items
+        items: action.payload.items,
       }
     case SET_ITEM:
       return {
         ...state,
-        item: action.payload.item
+        item: action.payload.item,
       }
     case POST_ITEM:
       return {
         ...state,
         item: {
-          ...initialState.item
-        }
+          ...initialState.item,
+        },
       }
     default:
       return state
   }
 }
 
-export const setItems = (items) => (
-  {
-    type: SET_ITEMS,
-    payload: {items}
-  }
-)
+export const setItems = (items) => ({
+  type: SET_ITEMS,
+  payload: { items },
+})
 
-export const setItem = (item) => (
-  {
-    type: SET_ITEM,
-    payload: {item}
-  }
-)
+export const setItem = (item) => ({
+  type: SET_ITEM,
+  payload: { item },
+})
 
-export const postItem = () => (
-  {
-    type: POST_ITEM
-  }
-)
+export const postItem = () => ({
+  type: POST_ITEM,
+})
 
-export default itemsReducer;
+export default itemsReducer

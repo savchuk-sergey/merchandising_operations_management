@@ -1,14 +1,15 @@
-import getData from "./utils/getData";
+import getData from './utils/getData'
 
 const getShipmentDetails = (params = {}) => {
-  return getData('http://localhost:3000/get_shipment_details')
-    .then(r => {
+  return getData(
+    'http://localhost:3000/get_shipment_details'
+  )
+    .then((r) => {
       return r
     })
-    .catch(e => {
+    .catch((e) => {
       alert(e.message)
     })
-
 }
 
 export default getShipmentDetails

@@ -7,8 +7,8 @@ const initialState = {
   wh: {
     wh_name: '',
     wh_manager: '',
-    wh_address: ''
-  }
+    wh_address: '',
+  },
 }
 
 const whsReducer = (state = initialState, action) => {
@@ -16,43 +16,37 @@ const whsReducer = (state = initialState, action) => {
     case SET_WHS:
       return {
         ...state,
-        whs: action.payload.whs
+        whs: action.payload.whs,
       }
     case SET_WH:
       return {
         ...state,
-        wh: action.payload.wh
+        wh: action.payload.wh,
       }
     case POST_WH:
       return {
         ...state,
         wh: {
-          ...initialState.wh
-        }
+          ...initialState.wh,
+        },
       }
     default:
       return state
   }
 }
 
-export const setWhs = (whs) => (
-  {
-    type: SET_WHS,
-    payload: {whs}
-  }
-)
+export const setWhs = (whs) => ({
+  type: SET_WHS,
+  payload: { whs },
+})
 
-export const setWh = (wh) => (
-  {
-    type: SET_WH,
-    payload: {wh}
-  }
-)
+export const setWh = (wh) => ({
+  type: SET_WH,
+  payload: { wh },
+})
 
-export const postWh = () => (
-  {
-    type: POST_WH
-  }
-)
+export const postWh = () => ({
+  type: POST_WH,
+})
 
-export default whsReducer;
+export default whsReducer

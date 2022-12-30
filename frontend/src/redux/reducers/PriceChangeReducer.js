@@ -5,25 +5,26 @@ const initialState = {
     item: '',
     store: '',
     change_amount: '',
-  }
+  },
 }
 
-const priceChangeReducer = (state = initialState, action) => {
+const priceChangeReducer = (
+  state = initialState,
+  action
+) => {
   switch (action.type) {
     case SET_PRICE_CHANGE:
       return {
         ...state,
-        priceChange: action.payload.priceChange
+        priceChange: action.payload.priceChange,
       }
     default:
       return state
   }
 }
 
-export const setPriceChange = (priceChange) => (
-  {
-    type: SET_PRICE_CHANGE,
-    payload: {priceChange}
-  }
-)
-export default priceChangeReducer;
+export const setPriceChange = (priceChange) => ({
+  type: SET_PRICE_CHANGE,
+  payload: { priceChange },
+})
+export default priceChangeReducer

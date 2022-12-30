@@ -12,8 +12,8 @@ const initialState = {
     store_type: '',
     default_wh: '',
     open_date: '',
-    close_date: ''
-  }
+    close_date: '',
+  },
 }
 
 const storesReducer = (state = initialState, action) => {
@@ -21,43 +21,37 @@ const storesReducer = (state = initialState, action) => {
     case SET_STORES:
       return {
         ...state,
-        stores: action.payload.stores
+        stores: action.payload.stores,
       }
     case SET_STORE:
       return {
         ...state,
-        store: action.payload.store
+        store: action.payload.store,
       }
     case POST_STORE:
       return {
         ...state,
         store: {
-          ...initialState.store
-        }
+          ...initialState.store,
+        },
       }
     default:
       return state
   }
 }
 
-export const setStores = (stores) => (
-  {
-    type: SET_STORES,
-    payload: {stores}
-  }
-)
+export const setStores = (stores) => ({
+  type: SET_STORES,
+  payload: { stores },
+})
 
-export const setStore = (store) => (
-  {
-    type: SET_STORE,
-    payload: {store}
-  }
-)
+export const setStore = (store) => ({
+  type: SET_STORE,
+  payload: { store },
+})
 
-export const postStore = () => (
-  {
-    type: POST_STORE
-  }
-)
+export const postStore = () => ({
+  type: POST_STORE,
+})
 
-export default storesReducer;
+export default storesReducer

@@ -11,3 +11,19 @@
 .custom-container {
   padding: 50px;
 }
+
+.trash {
+  z-index: -1;
+}
+
+.trash:hover {
+  color: #e57373;
+}
+
+.check {
+  z-index: -1;
+}
+
+.check:hover {
+  color: #26a69a;
+}

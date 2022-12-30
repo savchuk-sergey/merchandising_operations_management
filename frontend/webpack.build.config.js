@@ -14,38 +14,50 @@ module.exports = {
         use: [
           MiniCssExtractPlugin.loader,
           'css-loader',
-          'postcss-loader'
+          'postcss-loader',
         ],
-        include: defaultInclude
+        include: defaultInclude,
       },
       {
         test: /\.jsx?$/,
         use: [{ loader: 'babel-loader' }],
-        include: defaultInclude
+        include: defaultInclude,
       },
       {
         test: /\.(jpe?g|png|gif)$/,
-        use: [{ loader: 'file-loader?name=img/[name]__[hash:base64:5].[ext]' }],
-        include: defaultInclude
+        use: [
+          {
+            loader:
+              'file-loader?name=img/[name]__[hash:base64:5].[ext]',
+          },
+        ],
+        include: defaultInclude,
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
-        use: [{ loader: 'file-loader?name=font/[name]__[hash:base64:5].[ext]' }],
-        include: defaultInclude
-      }
-    ]
+        use: [
+          {
+            loader:
+              'file-loader?name=font/[name]__[hash:base64:5].[ext]',
+          },
+        ],
+        include: defaultInclude,
+      },
+    ],
   },
   target: 'electron-renderer',
   plugins: [
-    new HtmlWebpackPlugin({title: 'Merchandising operations management',}),
+    new HtmlWebpackPlugin({
+      title: 'Merchandising operations management',
+    }),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
       filename: 'bundle.css',
-      chunkFilename: '[id].css'
+      chunkFilename: '[id].css',
     }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
+      'process.env.NODE_ENV': JSON.stringify('production'),
     }),
     // new MinifyPlugin()
   ],
@@ -53,9 +65,9 @@ module.exports = {
     colors: true,
     children: false,
     chunks: false,
-    modules: false
+    modules: false,
   },
   optimization: {
-    minimize: true
-  }
+    minimize: true,
+  },
 }

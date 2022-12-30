@@ -6,8 +6,8 @@ const initialState = {
   packWhs: [],
   packWh: {
     pack: '',
-    wh: ''
-  }
+    wh: '',
+  },
 }
 
 const packWhsReducer = (state = initialState, action) => {
@@ -15,41 +15,35 @@ const packWhsReducer = (state = initialState, action) => {
     case SET_PACK_WHS:
       return {
         ...state,
-        packWhs: action.payload.packWhs
+        packWhs: action.payload.packWhs,
       }
     case SET_PACK_WH:
       return {
         ...state,
-        packWh: action.payload.packWh
+        packWh: action.payload.packWh,
       }
     case POST_PACK_WH:
       return {
         ...state,
-        packWh: {...initialState.packWh}
+        packWh: { ...initialState.packWh },
       }
     default:
       return state
   }
 }
 
-export const setPackWhs = (packWhs) => (
-  {
-    type: SET_PACK_WHS,
-    payload: {packWhs}
-  }
-)
+export const setPackWhs = (packWhs) => ({
+  type: SET_PACK_WHS,
+  payload: { packWhs },
+})
 
-export const setPackWh = (packWh) => (
-  {
-    type: SET_PACK_WH,
-    payload: {packWh}
-  }
-)
+export const setPackWh = (packWh) => ({
+  type: SET_PACK_WH,
+  payload: { packWh },
+})
 
-export const postPackWh = () => (
-  {
-    type: POST_PACK_WH
-  }
-)
+export const postPackWh = () => ({
+  type: POST_PACK_WH,
+})
 
-export default packWhsReducer;
+export default packWhsReducer

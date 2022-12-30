@@ -1,7 +1,7 @@
 const SET_STORES_SOH = 'SET_STORES_SOH'
 
 const initialState = {
-  storesSoh: []
+  storesSoh: [],
 }
 
 const storesSohReducer = (state = initialState, action) => {
@@ -9,17 +9,15 @@ const storesSohReducer = (state = initialState, action) => {
     case SET_STORES_SOH:
       return {
         ...state,
-        stores: action.payload.storesSoh
+        stores: action.payload.storesSoh,
       }
     default:
       return state
   }
 }
 
-export const setStoresSoh = (storesSoh) => (
-  {
-    type: SET_STORES_SOH,
-    payload: {storesSoh}
-  }
-)
-export default storesSohReducer;
+export const setStoresSoh = (storesSoh) => ({
+  type: SET_STORES_SOH,
+  payload: { storesSoh },
+})
+export default storesSohReducer

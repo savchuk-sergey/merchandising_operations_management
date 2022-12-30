@@ -5,11 +5,11 @@ async function postData(url = '', data = {}) {
     mode: 'cors',
     cache: 'no-cache',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data)
-  });
-  return await response.json();
+    body: JSON.stringify(data),
+  })
+  return await response.json()
 }
 
-export default postData;
+export default postData

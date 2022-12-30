@@ -8,51 +8,48 @@ const initialState = {
     shipment_id: '',
     pack: '',
     qty: '',
-  }
+  },
 }
 
-const shipmentDetailsReducer = (state = initialState, action) => {
+const shipmentDetailsReducer = (
+  state = initialState,
+  action
+) => {
   switch (action.type) {
     case SET_SHIPMENT_DETAILS:
       return {
         ...state,
-        shipmentDetails: action.payload.shipmentDetails
+        shipmentDetails: action.payload.shipmentDetails,
       }
     case SET_SHIPMENT_DETAIL:
       return {
         ...state,
-        shipmentDetail: action.shipmentDetail.orderDetail
+        shipmentDetail: action.shipmentDetail.orderDetail,
       }
     case POST_SHIPMENT_DETAIL:
       return {
         ...state,
         shipmentDetail: {
-          ...initialState.shipmentDetail
-        }
+          ...initialState.shipmentDetail,
+        },
       }
     default:
       return state
   }
 }
 
-export const setShipmentDetails = (shipmentDetails) => (
-  {
-    type: SET_SHIPMENT_DETAILS,
-    payload: {shipmentDetails}
-  }
-)
+export const setShipmentDetails = (shipmentDetails) => ({
+  type: SET_SHIPMENT_DETAILS,
+  payload: { shipmentDetails },
+})
 
-export const setShipmentDetail = (shipmentDetail) => (
-  {
-    type: SET_SHIPMENT_DETAIL,
-    payload: {shipmentDetail}
-  }
-)
+export const setShipmentDetail = (shipmentDetail) => ({
+  type: SET_SHIPMENT_DETAIL,
+  payload: { shipmentDetail },
+})
 
-export const postShipmentsDetail = () => (
-  {
-    type: POST_SHIPMENT_DETAIL
-  }
-)
+export const postShipmentsDetail = () => ({
+  type: POST_SHIPMENT_DETAIL,
+})
 
-export default shipmentDetailsReducer;
+export default shipmentDetailsReducer

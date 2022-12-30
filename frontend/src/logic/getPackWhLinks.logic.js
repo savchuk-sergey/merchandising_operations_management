@@ -1,14 +1,13 @@
-import getData from "./utils/getData";
+import getData from './utils/getData'
 
 const getPackWhLinks = () => {
   return getData('http://localhost:3000/get_pack_whs')
-    .then(r => {
+    .then((r) => {
       return r
     })
-    .catch(e => {
+    .catch((e) => {
       alert(e.message)
     })
-
 }
 
 export default getPackWhLinks

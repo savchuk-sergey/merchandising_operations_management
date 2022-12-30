@@ -8,51 +8,48 @@ const initialState = {
     order_id: '',
     pack: '',
     qty: '',
-  }
+  },
 }
 
-const orderDetailsReducer = (state = initialState, action) => {
+const orderDetailsReducer = (
+  state = initialState,
+  action
+) => {
   switch (action.type) {
     case SET_ORDER_DETAILS:
       return {
         ...state,
-        orderDetails: action.payload.orderDetails
+        orderDetails: action.payload.orderDetails,
       }
     case SET_ORDER_DETAIL:
       return {
         ...state,
-        orderDetail: action.payload.orderDetail
+        orderDetail: action.payload.orderDetail,
       }
     case POST_ORDER_DETAIL:
       return {
         ...state,
         orderDetail: {
-          ...initialState.orderDetail
-        }
+          ...initialState.orderDetail,
+        },
       }
     default:
       return state
   }
 }
 
-export const setOrderDetails = (orderDetails) => (
-  {
-    type: SET_ORDER_DETAILS,
-    payload: {orderDetails}
-  }
-)
+export const setOrderDetails = (orderDetails) => ({
+  type: SET_ORDER_DETAILS,
+  payload: { orderDetails },
+})
 
-export const setOrderDetail = (orderDetail) => (
-  {
-    type: SET_ORDER_DETAIL,
-    payload: {orderDetail}
-  }
-)
+export const setOrderDetail = (orderDetail) => ({
+  type: SET_ORDER_DETAIL,
+  payload: { orderDetail },
+})
 
-export const postOrderDetail = () => (
-  {
-    type: POST_ORDER_DETAIL
-  }
-)
+export const postOrderDetail = () => ({
+  type: POST_ORDER_DETAIL,
+})
 
-export default orderDetailsReducer;
+export default orderDetailsReducer
