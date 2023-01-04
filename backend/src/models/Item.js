@@ -4,13 +4,12 @@ const { PrismaClient } = require('@prisma/client')
 const deleteItem = async (item) => {
   try {
     const prisma = new PrismaClient()
-    const deleteUser = await prisma.item.delete({
+
+    return await prisma.item.delete({
       where: {
-        item: item,
+        item,
       },
     })
-
-    return deleteUser
   } catch (error) {
     throw error
   }
@@ -28,10 +27,10 @@ const createItem = async (
   updated_by = os.userInfo().username,
   selling_currency = 'RUB'
 ) => {
-  const prisma = new PrismaClient()
-
   try {
-    const createdItem = await prisma.item.create({
+    const prisma = new PrismaClient()
+
+    return await prisma.item.create({
       data: {
         item,
         item_type,
@@ -45,8 +44,6 @@ const createItem = async (
         selling_currency,
       },
     })
-
-    return createdItem
   } catch (error) {
     throw error
   }
@@ -55,9 +52,8 @@ const createItem = async (
 const getItems = async () => {
   try {
     const prisma = new PrismaClient()
-    const allItems = await prisma.item.findMany()
 
-    return allItems
+    return await prisma.item.findMany()
   } catch (error) {
     throw error
   }

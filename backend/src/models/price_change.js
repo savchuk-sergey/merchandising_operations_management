@@ -1,26 +1,25 @@
-//Pack/warehouse link data model
-const db = require('../db')
+const { PrismaClient } = require('@prisma/client')
 
-function PriceChange({ item, store, change_amount }) {
-  this.item = item
-  this.store = store
-  this.change_amount = change_amount
+const createPriceChange = async (
+  item_id,
+  store_id,
+  change_amount
+) => {
+  try {
+    const prisma = new PrismaClient()
+
+    return await prisma.item_store.update({
+      where: {
+        item_id,
+        store_id,
+      },
+      data: {
+        retail_price: change_amount,
+      },
+    })
+  } catch (error) {
+    throw error
+  }
 }
 
-// add a createItem method to the prototype
-PriceChange.prototype.createPriceChange =
-  async function () {
-    try {
-      const { rows } = await db.query(
-        `UPDATE main.item_store
-             set retail_price = $1
-             where item_id = $2 and store_id = $3`,
-        [this.change_amount, this.item, this.store]
-      )
-      return rows
-    } catch (error) {
-      throw error
-    }
-  }
-
-module.exports = PriceChange
+module.exports = { createPriceChange }

@@ -1,96 +1,53 @@
-//Warehouse data models
-const db = require('../db')
+const { PrismaClient } = require('@prisma/client')
 
-function Pack({
-  pack = '',
-  supplier_id = '',
-  pack_qty = '',
-  item_id = '',
-  description = '',
-  cost = '',
-}) {
-  this.pack = pack
-  this.supplier_id = supplier_id
-  this.pack_qty = pack_qty
-  this.item_id = item_id
-  this.description = description
-  this.cost = cost
-}
+const createPack = async (
+  pack,
+  supplier_id,
+  pack_qty,
+  item_id,
+  description,
+  cost
+) => {
+  const prisma = new PrismaClient()
 
-// add a createStore method to the prototype
-Pack.prototype.createPack = async function () {
   try {
-    const { rows } = await db.query(
-      `INSERT INTO main.pack(pack,
-                supplier_id,
-                pack_qty,
-                item_id,
-                description,
-                cost
-            )
-            VALUES ($1, $2, $3, $4, $5, $6)`,
-      [
-        this.pack,
-        this.supplier_id,
-        this.pack_qty,
-        this.item_id,
-        this.description,
-        this.cost,
-      ]
-    )
-    return rows
+    return await prisma.pack.create({
+      data: {
+        pack,
+        supplier_id,
+        pack_qty,
+        item_id,
+        description,
+        cost,
+      },
+    })
   } catch (error) {
     throw error
   }
 }
 
-// Pack.prototype.getPack = async function () {
-//   try {
-//     const { rows } = await db.query(
-//       `SELECT * FROM main.pack`
-//     )
-//     return rows
-//   } catch (error) {
-//     throw error
-//   }
-// }
+const deletePack = async (pack) => {
+  const prisma = new PrismaClient()
 
-Pack.prototype.getPack = async function () {
   try {
-    const { rows } = await db.query(
-      `select * from main.pack
-              where pack::varchar(255) like $1 and 
-              supplier_id::varchar(255) like $2 and
-              pack_qty::varchar(255) like $3 and
-              item_id::varchar(255) like $4 and
-              description::varchar(255) like $5 and
-              "cost"::varchar(255) like $6`,
-      [
-        `%${this.pack}%`,
-        `%${this.supplier_id}%`,
-        `%${this.pack_qty}%`,
-        `%${this.item_id}%`,
-        `%${this.description}%`,
-        `%${this.cost}%`,
-      ]
-    )
-    return rows
+    return await prisma.pack.delete({
+      where: {
+        pack,
+      },
+    })
   } catch (error) {
     throw error
   }
 }
 
-Pack.prototype.deletePack = async function () {
+const getPack = async () => {
+  const prisma = new PrismaClient()
+
   try {
-    const { rows } = await db.query(
-      `DELETE FROM main.pack
-            WHERE pack = $1`,
-      [this.pack]
-    )
-    return rows
+    return await prisma.pack.findMany({})
   } catch (error) {
     throw error
   }
 }
 
-module.exports = Pack
+module.exports = { createPack, getPack, deletePack }

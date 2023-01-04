@@ -1,20 +1,23 @@
-const Order = require('../models/order')
+const {
+  createOrder,
+  getOrder,
+  receiveOrder,
+} = require('../models/order')
 
 exports.postOrder = async (req, res, next) => {
   console.log(req.body)
   const { supplier_id, wh_id, pack, qty } = req.body
   try {
-    const _order = new Order({
-      supplier_id,
-      wh_id,
+    const result = await createOrder(
+      parseInt(supplier_id),
+      parseInt(wh_id),
+      new Date(),
       pack,
-      qty,
+      qty
+    )
+    res.status(201).send({
+      message: `Order ${result.id} was integrated`,
     })
-
-    const result = await _order.createOrder()
-    res
-      .status(201)
-      .send({ message: `Order was integrated` })
   } catch (error) {
     res.status(500).send({ message: error.message })
     next(error)
@@ -30,8 +33,7 @@ exports.getOrders = async (req, res, next) => {
   //     receive_date,
   // } = req.body;
   try {
-    const _order = new Order(req.body)
-    const result = await _order.getOrder()
+    const result = await getOrder()
     res.send(result)
   } catch (error) {
     res.status(500).send({ message: error.message })
@@ -43,13 +45,10 @@ exports.receiveOrder = async (req, res, next) => {
   const { order_id } = req.body
   console.log(order_id)
   try {
-    const _order = new Order({ order_id })
-    const result = await _order.receiveOrder()
-    res
-      .status(201)
-      .send({
-        message: `Order: ${order_id} has been received`,
-      })
+    const result = await receiveOrder(parseInt(order_id))
+    res.status(201).send({
+      message: `Order: ${result.id} has been received`,
+    })
   } catch (error) {
     res.status(500).send({ message: error.message })
     next(error)

@@ -1,36 +1,33 @@
-//Pack data models
-const db = require('../db')
+const { PrismaClient } = require('@prisma/client')
 
-function Wh({ wh_name, wh_manager, wh_address }) {
-  this.wh_name = wh_name
-  this.wh_manager = wh_manager
-  this.wh_address = wh_address
-}
-
-// add a createStore method to the prototype
-Wh.prototype.createWh = async function () {
+const createWh = async (
+  wh_name,
+  wh_manager,
+  wh_address
+) => {
   try {
-    const { rows } = await db.query(
-      `INSERT INTO main.wh(wh_name,
-                wh_manager,
-                wh_address
-            )
-            VALUES ($1, $2, $3)`,
-      [this.wh_name, this.wh_manager, this.wh_address]
-    )
-    return rows
+    const prisma = new PrismaClient()
+
+    return await prisma.wh.create({
+      data: {
+        wh_name,
+        wh_manager,
+        wh_address,
+      },
+    })
   } catch (error) {
     throw error
   }
 }
 
-Wh.prototype.getWh = async function () {
+const getWh = async () => {
   try {
-    const { rows } = await db.query(`SELECT * FROM main.wh`)
-    return rows
+    const prisma = new PrismaClient()
+
+    return prisma.wh.findMany()
   } catch (error) {
     throw error
   }
 }
 
-module.exports = Wh
+module.exports = { getWh, createWh }
