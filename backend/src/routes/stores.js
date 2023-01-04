@@ -2,7 +2,9 @@ const express = require('express')
 const router = express.Router()
 
 const createStoreController = require('../controllers/stores')
-router.post('/post_store', createStoreController.postStore)
-router.get('/get_stores', createStoreController.getStores)
+const path = '/api/stores'
+
+router.post(path, createStoreController.postStore)
+router.get(path, createStoreController.getStores)
 
 module.exports = router

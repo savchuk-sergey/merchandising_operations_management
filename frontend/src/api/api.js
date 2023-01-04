@@ -1,3 +1,0 @@
-
-
-const usersAPI = axios.create()

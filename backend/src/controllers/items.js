@@ -42,11 +42,11 @@ exports.postItem = async (req, res, next) => {
 }
 
 exports.removeItem = async (req, res, next) => {
-  const { item_id } = req.body
+  const itemId = req.params.itemId
 
   console.log(req.body)
   try {
-    const result = await deleteItem(item_id)
+    const result = await deleteItem(itemId)
     res.status(201).send({
       message: `Item: ${result.item} has been deleted`,
     })

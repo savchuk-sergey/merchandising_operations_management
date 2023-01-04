@@ -2,6 +2,9 @@ const express = require('express')
 const router = express.Router()
 
 const whController = require('../controllers/wh')
-router.post('/post_wh', whController.postWh)
-router.get('/get_whs', whController.getWh)
+const path = '/api/whs'
+
+router.post(path, whController.postWh)
+router.get(path, whController.getWh)
+
 module.exports = router
