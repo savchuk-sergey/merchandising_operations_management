@@ -2,30 +2,40 @@ import axios from 'axios'
 
 const apiUrl = 'http://localhost:3000/api/'
 
-const itemsApi = axios.create({
-  baseURL: apiUrl + 'items',
+const axiosInstance = axios.create({
+  baseURL: apiUrl,
 })
 
-const itemStoresApi = axios.create({
-  baseURL: apiUrl + 'item_stores',
-})
+const itemsApi = {
+  createItem(item) {
+    return axiosInstance
+      .post('items', item)
+      .then((r) => r.data)
+  },
 
-export const createItem = async (item) => {
-  return itemsApi.post('', { item }).then((r) => r.data)
+  getItems() {
+    return axiosInstance.get('items').then((r) => {
+      return r.data
+    })
+  },
+
+  deleteItem(itemId) {
+    return axiosInstance
+      .delete(`items/${itemId}`)
+      .then((r) => r.data)
+  },
+
+  getItemStores() {
+    return axiosInstance
+      .get('item_stores')
+      .then((r) => r.data)
+  },
+
+  createItemStore(itemStore) {
+    return axiosInstance
+      .post('item_stores', { itemStore })
+      .then((r) => r.data)
+  },
 }
 
-export const getItems = async () => {
-  return itemsApi.get('').then((r) => r.data)
-}
-
-export const deleteItem = async (itemId) => {
-  return itemsApi.delete(`/${itemId}`).then((r) => r.data)
-}
-
-export const getItemStores = async () => {
-  return itemStoresApi.get('').then((r) => r.data)
-}
-
-export const createItemStore = async () => {
-  return itemStoresApi.post('').then((r) => r.data)
-}
+export default itemsApi

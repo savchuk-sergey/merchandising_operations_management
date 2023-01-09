@@ -1,6 +1,8 @@
+import itemsApi from '../../api/itemsApi'
+
 const SET_ITEMS = 'SET_ITEMS'
 const SET_ITEM = 'SET_ITEM'
-const POST_ITEM = 'POST_ITEM'
+const CREATE_ITEM = 'CREATE_ITEM'
 
 const initialState = {
   items: [],
@@ -30,7 +32,7 @@ const itemsReducer = (state = initialState, action) => {
         ...state,
         item: action.payload.item,
       }
-    case POST_ITEM:
+    case CREATE_ITEM:
       return {
         ...state,
         item: {
@@ -52,8 +54,33 @@ export const setItem = (item) => ({
   payload: { item },
 })
 
-export const postItem = () => ({
-  type: POST_ITEM,
+const createItemAction = () => ({
+  type: CREATE_ITEM,
 })
+
+export const createItem = (item) => (dispatch) => {
+  itemsApi.createItem(item).then((r) => {
+    dispatch(createItemAction())
+    M.toast({ html: r.message })
+  })
+}
+
+export const getItems = () => (dispatch) => {
+  itemsApi
+    .getItems()
+    .then((items) => dispatch(setItems(items)))
+}
+
+export const deleteItem = (itemId) => (dispatch) => {
+  itemsApi
+    .deleteItem(itemId)
+    .then((r) => {
+      dispatch(getItems())
+      M.toast({ html: r.message })
+    })
+    .catch((r) => {
+      M.toast({ html: r.message })
+    })
+}
 
 export default itemsReducer

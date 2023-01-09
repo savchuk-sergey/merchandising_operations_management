@@ -1,41 +1,32 @@
 import React from 'react'
 import Button from 'react-materialize/lib/Button'
 import UploadCSV from '../../utils/UploadCSV'
-import postData from '../../../logic/utils/postData'
-import { useDispatch, useSelector } from 'react-redux'
+import { connect } from 'react-redux'
 import {
-  postItem,
+  createItem,
   setItem,
 } from '../../../redux/reducers/itemsReducer'
+import { compose } from 'redux'
 
-const CreateItem = () => {
-  const dispatch = useDispatch()
-  const item = useSelector((state) => state.items.item)
+const CreateItem = (props) => {
+  const item = props.item
 
-  const submitHandler = (e) => {
-    console.log(item)
+  const submitItemHandler = (e) => {
     e.preventDefault()
-    postData('http://localhost:3000/post_item', item)
-      .then((r) => {
-        M.toast({ html: r.message })
-        dispatch(postItem())
-      })
-      .catch((e) => {
-        M.toast({ html: e.message })
-      })
+    props.createItem(item)
   }
 
   const changeHandler = (e) => {
     let obj = {}
     obj[e.target.id] = e.target.value
 
-    dispatch(setItem({ ...item, ...obj }))
+    props.setItem({ ...item, ...obj })
   }
 
   return (
     <div className='container center'>
       <h4>Create Item</h4>
-      <form onSubmit={submitHandler}>
+      <form onSubmit={submitItemHandler}>
         <div className='z-depth-3 custom-container '>
           <label htmlFor='item'>Item No</label>
           <input
@@ -102,4 +93,11 @@ const CreateItem = () => {
     </div>
   )
 }
-export default CreateItem
+
+const mapStateToProps = (state) => ({
+  item: state.items.item,
+})
+
+export default compose(
+  connect(mapStateToProps, { setItem, createItem })
+)(CreateItem)

@@ -1,65 +1,41 @@
 import React, { useEffect } from 'react'
-import getItems, {
-  searchItems,
-} from '../../logic/getItems.logic'
-import { useDispatch, useSelector } from 'react-redux'
+import { connect } from 'react-redux'
 import {
-  setItem,
-  setItems,
+  deleteItem,
+  getItems,
 } from '../../redux/reducers/itemsReducer'
 import formatDateTime from '../utils/formatDateTime'
 import { CSVLink } from 'react-csv'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
-import postData from '../../logic/utils/postData'
-import getData from '../../logic/utils/getData'
-import { setPacks } from '../../redux/reducers/PacksReducer'
+import { compose } from 'redux'
 
-const Items = () => {
-  const dispatch = useDispatch()
-  const items = useSelector((state) => state.items.items)
-  const item = useSelector((state) => state.items.item)
+const Items = (props) => {
+  const items = props.items
+  const item = props.item
 
   useEffect(() => {
-
-    getData('http://localhost:3000/get_items')
-      .then((r) => {
-        dispatch(setItems(r))
-      })
-      .catch((e) => console.log(e))
-    // searchItems().then((r) => {
-    //   debugger
-    //   dispatch(setItems(r))
-    // })
+    props.getItems()
   }, [])
 
-  const changeHandler = (e) => {
-    let obj = item
-
-    obj[e.target.name] = e.target.value
-    dispatch(setItem({ ...item, ...obj }))
-    searchItems(item)
-      .then((r) => {
-        dispatch(setItems(r))
-      })
-      .catch((e) => console.log(e.message))
+  const searchInputHandler = (e) => {
+    // let obj = item
+    //
+    // obj[e.target.name] = e.target.value
+    //
+    //
+    // dispatch(setItem({ ...item, ...obj }))
+    // searchItems(item)
+    //   .then((r) => {
+    //     dispatch(setItems(r))
+    //   })
+    //   .catch((e) => console.log(e.message))
   }
 
-  const clickHandler = (e) => {
-    const item_id = e.currentTarget.id
-    console.log(item_id)
-    postData('http://localhost:3000/remove_item', {
-      item_id,
-    }).then((r) => {
-      M.toast({ html: r.message })
-      searchItems().then((r) => {
-        dispatch(setItems(r))
-      })
-    })
-    // .catch(e =>
-    //   console.log(e.message)
-    //   M.toast({html: e.message})
-    // )
+  const itemDeleteHandler = (e) => {
+    const itemId = e.currentTarget.id
+
+    props.deleteItem(itemId)
   }
 
   return (
@@ -85,7 +61,7 @@ const Items = () => {
                 <input
                   name='item'
                   type='text'
-                  onChange={changeHandler}
+                  onChange={searchInputHandler}
                   value={item.item}
                 />
               </th>
@@ -94,7 +70,7 @@ const Items = () => {
                   name='item_type'
                   type='text'
                   value={item.item_type}
-                  onChange={changeHandler}
+                  onChange={searchInputHandler}
                 />
               </th>
               <th className='tg-0lax'>
@@ -102,7 +78,7 @@ const Items = () => {
                   name='description'
                   type='text'
                   value={item.description}
-                  onChange={changeHandler}
+                  onChange={searchInputHandler}
                 />
               </th>
               <th className='tg-0lax'>
@@ -110,7 +86,7 @@ const Items = () => {
                   name='start_retail'
                   type='number'
                   value={item.start_retail}
-                  onChange={changeHandler}
+                  onChange={searchInputHandler}
                 />
               </th>
               <th className='tg-0lax'>
@@ -118,7 +94,7 @@ const Items = () => {
                   name='uom'
                   type='text'
                   value={item.uom}
-                  onChange={changeHandler}
+                  onChange={searchInputHandler}
                 />
               </th>
               <th className='tg-0lax'>
@@ -126,7 +102,7 @@ const Items = () => {
                   name='created_at'
                   type='date'
                   value={item.created_at}
-                  onChange={changeHandler}
+                  onChange={searchInputHandler}
                 />
               </th>
               <th className='tg-0lax'>
@@ -134,7 +110,7 @@ const Items = () => {
                   name='created_by'
                   type='text'
                   value={item.created_by}
-                  onChange={changeHandler}
+                  onChange={searchInputHandler}
                 />
               </th>
               <th className='tg-0lax'>
@@ -142,7 +118,7 @@ const Items = () => {
                   name='updated_at'
                   type='date'
                   value={item.updated_at}
-                  onChange={changeHandler}
+                  onChange={searchInputHandler}
                 />
               </th>
               <th className='tg-0lax'>
@@ -150,7 +126,7 @@ const Items = () => {
                   name='updated_by'
                   type='text'
                   value={item.updated_by}
-                  onChange={changeHandler}
+                  onChange={searchInputHandler}
                 />
               </th>
               <th className='tg-0lax'>
@@ -158,7 +134,7 @@ const Items = () => {
                   name='selling_currency'
                   type='text'
                   value={item.selling_currency}
-                  onChange={changeHandler}
+                  onChange={searchInputHandler}
                 />
               </th>
             </tr>
@@ -194,7 +170,7 @@ const Items = () => {
                 </td>
                 <td
                   className='tg-0lax'
-                  onClick={clickHandler}
+                  onClick={itemDeleteHandler}
                   id={item.item}
                 >
                   <FontAwesomeIcon
@@ -221,4 +197,36 @@ const Items = () => {
     </>
   )
 }
-export default Items
+
+const mapStateToProps = (state) => ({
+  items: state.items.items,
+  item: state.items.item,
+})
+
+export default compose(
+  connect(mapStateToProps, {
+    getItems,
+    deleteItem,
+  })
+)(Items)
+
+// const mapStateToProps = (state) => {
+//   return {
+//     users: state.usersPage.users,
+//     currentPage: state.usersPage.currentPage,
+//     totalCount: state.usersPage.totalCount,
+//     pageSize: state.usersPage.pageSize,
+//     isFetching: state.usersPage.isFetching,
+//     isFollowFetching: state.usersPage.isFollowFetching,
+//     isAuth: state.auth.isAuth,
+//   }
+// }
+//
+// export default compose(
+//   connect(mapStateToProps, {
+//     setCurrentPage,
+//     setUsersThunkCreator,
+//     followThunkCreator,
+//     unFollowThunkCreator,
+//   })
+// )(UsersContainer)
