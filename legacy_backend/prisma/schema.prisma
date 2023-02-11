@@ -1,0 +1,207 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model item {
+  item                           String       @id @db.VarChar
+  item_type                      String       @db.VarChar
+  description                    String       @db.VarChar
+  start_retail                   Decimal      @default(0) @db.Decimal
+  uom                            String       @db.VarChar
+  created_at                     DateTime     @db.Timestamptz(6)
+  created_by                     String       @db.VarChar
+  updated_at                     DateTime     @db.Timestamptz(6)
+  updated_by                     String       @db.VarChar
+  selling_currency               String       @default("RUB") @db.VarChar(3)
+  item_store                     item_store[]
+  pack                           pack[]
+  promotion_promotion_itemToitem promotion[]  @relation("promotion_itemToitem")
+}
+
+model item_store {
+  item_id      String      @db.VarChar
+  store_id     Int
+  retail_price Float       @db.Real
+  qty          Decimal?    @default(0) @db.Decimal
+  created_by   String?     @db.VarChar
+  created_at   DateTime?   @db.Timestamptz(6)
+  updated_by   String?     @db.VarChar
+  updated_at   DateTime?   @db.Timestamptz(6)
+  item         item        @relation(fields: [item_id], references: [item], onDelete: NoAction, onUpdate: NoAction, map: "item_fk")
+  store        store       @relation(fields: [store_id], references: [store], onDelete: NoAction, onUpdate: NoAction, map: "store_fk")
+  promotion    promotion[]
+
+  @@id([item_id, store_id])
+}
+
+model order {
+  id            Int             @id @default(autoincrement())
+  supplier_id   Int
+  wh_id         Int
+  status        String          @db.VarChar
+  order_date    DateTime        @db.Date
+  receive_date  DateTime?       @db.Date
+  supplier      supplier        @relation(fields: [supplier_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "supplier_exists")
+  wh            wh              @relation(fields: [wh_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "wh_exists")
+  order_details order_details[]
+}
+
+model order_details {
+  order_id                      Int
+  pack                          String  @db.VarChar
+  qty                           Decimal @db.Decimal
+  id                            Int     @id @default(autoincrement())
+  order                         order   @relation(fields: [order_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "order_exists")
+  pack_order_details_packTopack pack    @relation("order_details_packTopack", fields: [pack], references: [pack], onDelete: NoAction, onUpdate: NoAction, map: "pack_exists")
+}
+
+model pack {
+  pack                                         String             @id @db.VarChar
+  supplier_id                                  Int
+  pack_qty                                     Int
+  item_id                                      String             @db.VarChar
+  description                                  String?            @db.VarChar
+  cost                                         Decimal?           @db.Decimal
+  order_details_order_details_packTopack       order_details[]    @relation("order_details_packTopack")
+  item                                         item               @relation(fields: [item_id], references: [item], onDelete: NoAction, onUpdate: NoAction, map: "item_exists")
+  supplier                                     supplier           @relation(fields: [supplier_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "supplier_exists")
+  pack_wh_pack_wh_packTopack                   pack_wh[]          @relation("pack_wh_packTopack")
+  shipment_details_shipment_details_packTopack shipment_details[] @relation("shipment_details_packTopack")
+}
+
+model pack_wh {
+  pack                    String   @db.VarChar
+  wh                      Int
+  qty                     Decimal? @default(0) @db.Decimal
+  pack_pack_wh_packTopack pack     @relation("pack_wh_packTopack", fields: [pack], references: [pack], onDelete: NoAction, onUpdate: NoAction, map: "pack_exists")
+  wh_pack_wh_whTowh       wh       @relation("pack_wh_whTowh", fields: [wh], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "wh_exists")
+
+  @@id([pack, wh])
+}
+
+model promotion {
+  id                           Int        @id @default(autoincrement())
+  item                         String     @db.VarChar
+  store                        Int
+  discount_type                String
+  discount_amount              Decimal    @db.Decimal
+  start_date                   DateTime   @db.Timestamptz(6)
+  end_date                     DateTime   @db.Timestamptz(6)
+  item_promotion_itemToitem    item       @relation("promotion_itemToitem", fields: [item], references: [item], onDelete: Cascade, map: "item_fk")
+  item_store                   item_store @relation(fields: [item, store], references: [item_id, store_id], onDelete: NoAction, onUpdate: NoAction, map: "item_store_exists")
+  store_promotion_storeTostore store      @relation("promotion_storeTostore", fields: [store], references: [store], onDelete: Cascade, map: "store_fk")
+}
+
+model roles {
+  id         Int          @id
+  name       String?      @db.VarChar(255)
+  createdAt  DateTime     @db.Timestamptz(6)
+  updatedAt  DateTime     @db.Timestamptz(6)
+  user_roles user_roles[]
+}
+
+model sales {
+  id         Int      @id @default(autoincrement())
+  item_id    String   @db.VarChar
+  store_id   Int
+  qty        Decimal  @db.Decimal
+  sale_price Decimal  @db.Decimal
+  sale_date  DateTime @db.Timetz(6)
+}
+
+model shipment {
+  id               Int                @id @default(autoincrement())
+  from             Int
+  to               Int
+  status           String             @db.VarChar
+  out_date         DateTime           @db.Date
+  in_date          DateTime?          @db.Date
+  store            store              @relation(fields: [to], references: [store], onDelete: NoAction, onUpdate: NoAction, map: "store_exists")
+  wh               wh                 @relation(fields: [from], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "wh_exists")
+  shipment_details shipment_details[]
+}
+
+model shipment_details {
+  shipment_id                      Int
+  pack                             String   @db.VarChar
+  qty                              Decimal  @db.Decimal
+  pack_shipment_details_packTopack pack     @relation("shipment_details_packTopack", fields: [pack], references: [pack], onDelete: NoAction, onUpdate: NoAction, map: "pack_exists")
+  shipment                         shipment @relation(fields: [shipment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "shipment_exists")
+
+  @@id([shipment_id, pack])
+}
+
+model store {
+  store                            Int          @id(map: "store_pk")
+  store_name                       String
+  store_manager                    String?
+  phone_number                     String
+  store_type                       String
+  default_wh                       Int
+  open_date                        DateTime     @db.Timestamptz(6)
+  close_date                       DateTime?    @db.Timestamptz(6)
+  item_store                       item_store[]
+  promotion_promotion_storeTostore promotion[]  @relation("promotion_storeTostore")
+  shipment                         shipment[]
+}
+
+model supplier {
+  id           Int     @id @default(autoincrement())
+  name         String  @db.VarChar
+  address      String? @db.VarChar
+  phone_number String? @db.VarChar
+  order        order[]
+  pack         pack[]
+}
+
+model user_roles {
+  createdAt DateTime @db.Timestamptz(6)
+  updatedAt DateTime @db.Timestamptz(6)
+  roleId    Int
+  userId    Int
+  roles     roles    @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  users     users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, userId])
+}
+
+model users {
+  id         Int          @id @default(autoincrement())
+  username   String?      @db.VarChar(255)
+  email      String?      @db.VarChar(255)
+  password   String?      @db.VarChar(255)
+  createdAt  DateTime     @db.Timestamptz(6)
+  updatedAt  DateTime     @db.Timestamptz(6)
+  user_roles user_roles[]
+}
+
+model wh {
+  id                     Int        @id @default(autoincrement())
+  wh_name                String
+  wh_manager             String?
+  wh_address             String?
+  order                  order[]
+  pack_wh_pack_wh_whTowh pack_wh[]  @relation("pack_wh_whTowh")
+  shipment               shipment[]
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model temp {
+  item             String?   @db.VarChar
+  item_type        String?   @db.VarChar
+  description      String?   @db.VarChar
+  start_retail     Decimal?  @db.Decimal
+  uom              String?   @db.VarChar
+  created_at       DateTime? @db.Timestamptz(6)
+  created_by       String?   @db.VarChar
+  updated_at       DateTime? @db.Timestamptz(6)
+  updated_by       String?   @db.VarChar
+  selling_currency String?   @db.VarChar(3)
+
+  @@ignore
+}

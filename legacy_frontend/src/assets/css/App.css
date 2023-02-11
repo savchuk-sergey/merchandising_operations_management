@@ -1,0 +1,29 @@
+/* Main CSS file */
+
+@import 'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css';
+.noselect {
+  user-select: none;
+}
+.signout {
+  color: white;
+}
+
+.custom-container {
+  padding: 50px;
+}
+
+.trash {
+  z-index: -1;
+}
+
+.trash:hover {
+  color: #e57373;
+}
+
+.check {
+  z-index: -1;
+}
+
+.check:hover {
+  color: #26a69a;
+}

@@ -18,7 +18,6 @@ if (handleSquirrelEvent(app)) {
 //   'Users\\ghery\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 1\\fmkadmapgofadopljbjfkapdkoienihi\\4.24.7_0'
 // )
 //
-// console.log(reactDevToolsPath)
 
 // const {
 //   default: installExtension,

@@ -1,0 +1,45 @@
+{
+  "name": "my-webpack-project",
+  "version": "1.0.0",
+  "description": "My webpack project",
+  "main": "src/app.js",
+  "repository": {
+    "type": "git",
+    "url": "-"
+  },
+  "author": "Sergey Savchuk",
+  "license": "ISC",
+  "scripts": {
+    "start": "nodemon src/app.js",
+    "dev": "concurrently \"nodemon app.js\" \"cd ../legacy_frontend && npm start\"",
+    "build": "webpack --mode=production --node-env=production",
+    "watch": "webpack --watch",
+    "serve": "webpack serve"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.8.0",
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "pg": "^8.7.3",
+    "pg-promise": "^10.11.1",
+    "requirejs": "^2.3.6",
+    "sequelize": "^6.20.1"
+  },
+  "devDependencies": {
+    "@webpack-cli/generators": "^3.0.1",
+    "awesome-typescript-loader": "^5.2.1",
+    "concurrently": "^7.0.0",
+    "js-to-ts-converter": "^0.18.2",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.7.1",
+    "prisma": "^4.8.0",
+    "source-map-loader": "^4.0.1",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "workbox-webpack-plugin": "^6.5.4"
+  }
+}
